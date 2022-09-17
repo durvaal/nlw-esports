@@ -41,7 +41,7 @@ function App() {
         Seu <span className="text-transparent bg-nlw-gradient bg-clip-text">duo</span> está aqui.
       </h1>
 
-      <div className="grid grid-cols-6 gap-6 mt-16">
+      <div className="grid grid-cols-3 gap-6 mt-16">
         {
           games.map((game) => {
             return (
