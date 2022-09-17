@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import axios from 'axios';
+
 import { convertHourStringToMinutes } from './utils/convert-hour-string-to-minutes';
 import { convertMinutesToHourString } from './utils/convert-minutes-to-hour-string';
 
@@ -73,6 +75,23 @@ app.post('/games/:id/ads', async (request: Request, response: Response) => {
       hourEnd: convertHourStringToMinutes(body.hourEnd)
     }
   });
+
+  const game = await prisma.game.findUniqueOrThrow({
+    select: {
+      title: true,
+    },
+    where: {
+      id: ad.gameId,
+    }
+  });
+
+  await axios.post('https://exp.host/--/api/v2/push/send', {
+    to: 'ExponentPushToken[0jkpe7OuQUcg5mBQN8IwzT]',
+    title: `Confira o novo anúncio`,
+    body: `O usuário '${ad.name}' está buscando um Duo para '${game.title}'`
+  });
+
+  console.info('[EXPO] Send notification to device');
 
   return response.status(200).json(ad);
 });
