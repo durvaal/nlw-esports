@@ -12,10 +12,20 @@ interface Game {
   title: string;
 }
 
+interface GamePost {
+  name: string;
+  yearsPlaying: number;
+  discord: string;
+  weekDays: string[];
+  hourStart: string;
+  hourEnd: string;
+  useVoiceChannel: boolean;
+}
+
 export function CreateAdModal() {
   const [games, setGames] = useState<Game[]>([]);
-  const [weekDays, setWeekDays] = useState<string[]>([]);
-  const [useVoiceChannel, setUseVoiceChannel] = useState<boolean>(false);
+  const [weekDays, setWeekDays] = useState<string[]>(["1", "2"]);
+  const [useVoiceChannel, setUseVoiceChannel] = useState<boolean>(true);
 
   const getGames = () => {
     axios('http://localhost:3000/games')
@@ -39,7 +49,7 @@ export function CreateAdModal() {
         hourStart: data.hourStart,
         hourEnd: data.hourEnd,
         useVoiceChannel: useVoiceChannel
-      });
+      } as GamePost);
 
       alert("Anúncio criado com sucesso!");
     } catch (error) {
@@ -78,18 +88,18 @@ export function CreateAdModal() {
 
             <div className="flex flex-col gap-2">
               <label htmlFor="name" className="font-semibold">Seu nome (ou nickname)</label>
-              <Input name="name" id="name" placeholder="como te chamam dentro do game?" />
+              <Input name="name" id="name" placeholder="como te chamam dentro do game?" value="Durvalino" />
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="flex flex-col gap-2">
                 <label htmlFor="yearsPlaying" className="font-semibold">Joga a quantos anos?</label>
-                <Input name="yearsPlaying" id="yearsPlaying" type="number" placeholder="Tudo bem ser ZERO" />
+                <Input name="yearsPlaying" id="yearsPlaying" type="number" placeholder="Tudo bem ser ZERO" value="2" />
               </div>
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="discord" className="font-semibold">Qual o seu discord?</label>
-                <Input name="discord" id="discord" placeholder="Usuario#0000" />
+                <Input name="discord" id="discord" placeholder="Usuario#0000" value="durvall" />
               </div>
             </div>
 
@@ -158,8 +168,8 @@ export function CreateAdModal() {
               <div className="flex flex-col gap-2 flex-1">
                 <label htmlFor="hourStart" className="font-semibold">Qual o horário do dia?</label>
                 <div className="grid grid-cols-2 gap-2">
-                  <Input name="hourStart" id="hourStart" type="time" placeholder="De" />
-                  <Input name="hourEnd" id="hourEnd" type="time" placeholder="Até" />
+                  <Input name="hourStart" id="hourStart" type="time" placeholder="De" value="03:00" />
+                  <Input name="hourEnd" id="hourEnd" type="time" placeholder="Até" value="05:00" />
                 </div>
               </div>
             </div>
