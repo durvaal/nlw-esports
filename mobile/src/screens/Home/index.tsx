@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FlatList, Image } from 'react-native';
+import { FlatList, Image, RefreshControl, ScrollView, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 
@@ -14,6 +14,7 @@ import { styles } from './styles';
 
 export function Home() {
   const [games, setGames] = useState<GameCardProps[]>([]);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const navitation = useNavigation();
 
@@ -27,6 +28,12 @@ export function Home() {
 
   const handleOpenGame = ({ id, title, bannerUrl }: GameCardProps) => {
     navitation.navigate('game', { id, title, bannerUrl });
+  }
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await getGames();
+    setRefreshing(false);
   }
 
   useEffect(() => {
@@ -46,19 +53,24 @@ export function Home() {
           subtitle="Selecione o game que deseja jogar..."
         />
 
-        <FlatList
-          data={games}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <GameCard
-              data={item}
-              onPress={() => handleOpenGame(item)}
-            />
-          )}
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          contentContainerStyle={styles.contentList}
-        />
+
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        >
+          <FlatList
+            data={games}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => (
+              <GameCard
+                data={item}
+                onPress={() => handleOpenGame(item)}
+              />
+            )}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            contentContainerStyle={styles.contentList}
+          />
+        </ScrollView>
       </SafeAreaView>
     </Background>
   );
