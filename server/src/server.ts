@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import axios from 'axios';
+import { z } from 'zod';
 
 import { convertHourStringToMinutes } from './utils/convert-hour-string-to-minutes';
 import { convertMinutesToHourString } from './utils/convert-minutes-to-hour-string';
@@ -63,16 +64,23 @@ app.get('/games/:id/ads', async (request: Request, response: Response) => {
 
 // criação de novo anúncio
 app.post('/games/:id/ads', async (request: Request, response: Response) => {
+  const GamePost = z.object({
+    name: z.string(),
+    yearsPlaying: z.number(),
+    discord: z.string(),
+    weekDays:z.array(z.string()).transform((value) => value.join(',')),
+    hourStart: z.string().transform((value) => convertHourStringToMinutes(value)),
+    hourEnd: z.string().transform((value) => convertHourStringToMinutes(value)),
+    useVoiceChannel: z.boolean(),
+  });
+
   const gameId = request.params.id;
-  const body = request.body; // validar com zod javascript
+  const body = GamePost.parse(request.body); // validar com zod javascript
 
   const ad = await prisma.ad.create({
     data: {
       gameId,
       ...body,
-      weekDays: body.weekDays.join(','),
-      hourStart: convertHourStringToMinutes(body.hourStart),
-      hourEnd: convertHourStringToMinutes(body.hourEnd)
     }
   });
 
