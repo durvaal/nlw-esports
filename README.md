@@ -8,6 +8,8 @@ Monorepo da trilha Ignite envolvendo as seguintes stacks:
 - Frontend WEB em ReactJS: [pasta web](./web)
 - Frontend mobile em React Native: [pasta mobile](./mobile)
 
+A trilha Ignite mencionada faz parte da NLW eSports. A NLW é um evento online e gratuito de programação ofertado pela equipe da [Rocketseat](https://www.rocketseat.com.br/) :rocket:
+
 ### Showcase
 
 Clique na thumb abaixo para visualizar um pequeno vídeo :)
