@@ -88,18 +88,18 @@ export function CreateAdModal() {
 
             <div className="flex flex-col gap-2">
               <label htmlFor="name" className="font-semibold">Seu nome (ou nickname)</label>
-              <Input name="name" id="name" placeholder="como te chamam dentro do game?" value="Durvalino" />
+              <Input name="name" id="name" placeholder="como te chamam dentro do game?" />
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="flex flex-col gap-2">
                 <label htmlFor="yearsPlaying" className="font-semibold">Joga a quantos anos?</label>
-                <Input name="yearsPlaying" id="yearsPlaying" type="number" placeholder="Tudo bem ser ZERO" value="2" />
+                <Input name="yearsPlaying" id="yearsPlaying" type="number" placeholder="Tudo bem ser ZERO" />
               </div>
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="discord" className="font-semibold">Qual o seu discord?</label>
-                <Input name="discord" id="discord" placeholder="Usuario#0000" value="durvall" />
+                <Input name="discord" id="discord" placeholder="Usuario#0000"/>
               </div>
             </div>
 
@@ -168,8 +168,8 @@ export function CreateAdModal() {
               <div className="flex flex-col gap-2 flex-1">
                 <label htmlFor="hourStart" className="font-semibold">Qual o horário do dia?</label>
                 <div className="grid grid-cols-2 gap-2">
-                  <Input name="hourStart" id="hourStart" type="time" placeholder="De" value="03:00" />
-                  <Input name="hourEnd" id="hourEnd" type="time" placeholder="Até" value="05:00" />
+                  <Input name="hourStart" id="hourStart" type="time" placeholder="De" />
+                  <Input name="hourEnd" id="hourEnd" type="time" placeholder="Até" />
                 </div>
               </div>
             </div>
